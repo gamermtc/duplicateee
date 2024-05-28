@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Error en el pago</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom right, blue, red);
+    color: white;
+  }
+  #mensaje {
+    text-align: center;
+    font-size: 24px;
+  }
+  #cara-triste {
+    font-size: 100px; /* Tamaño más grande */
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div id="mensaje">
+  <p>Error en el pago. Por favor, reintente con otro medio de pago.</p>
+  <div id="cara-triste">&#128577;</div> <!-- Cara más triste -->
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Obtener el elemento de la carita triste
+    var caraTriste = document.getElementById("cara-triste");
+
+    // Cambiar el color de la carita triste a negro
+    caraTriste.style.color = "black";
+});
+
+// Redirigir a otra página después de 10 segundos
+setTimeout(function() {
+    window.location.href = '';
+}, 10000); // 10 segundos
+</script>
+
+</body>
+</html>
